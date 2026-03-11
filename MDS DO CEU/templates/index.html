@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware Wiki | Opera GX Edition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fa-solid fa-microchip"></i>
+            <span>WIKI HARDWARE</span>
+        </div>
+        
+        <nav class="nav-menu">
+            <p class="nav-title">Categorias</p>
+            {% for categoria in categorias.keys() %}
+            <a href="#{{ categoria|replace(' ', '-') }}" class="nav-item">
+                <i class="fa-solid fa-chevron-right"></i>
+                {{ categoria }}
+            </a>
+            {% endfor %}
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="main-header">
+            <h1>Explore os Componentes</h1>
+            <p>Seu guia definitivo de hardware com estilo gamer.</p>
+        </header>
+
+        {% for categoria, itens_slugs in categorias.items() %}
+        <section id="{{ categoria|replace(' ', '-') }}" class="category-section">
+            <h2 class="category-name">{{ categoria }}</h2>
+            
+            <div class="card-grid">
+                {% for slug in itens_slugs %}
+                {% set item = db[slug] %}
+                <a href="{{ url_for('detalhe', slug=slug) }}" class="card">
+                    <div class="card-img">
+                        <img src="{{ url_for('static', filename='img/' + item.img) }}" alt="{{ item.nome }}">
+                    </div>
+                    <div class="card-info">
+                        <h3>{{ item.nome }}</h3>
+                        <span>Ver Ficha Técnica <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                    <div class="shine"></div>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+    </main>
+
+</body>
+</html>

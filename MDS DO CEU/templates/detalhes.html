@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item.nome }} | Detalhes Técnicos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="details-body">
+
+    <div class="bg-glow"></div>
+
+    <div class="details-wrapper">
+        <a href="{{ url_for('home') }}" class="back-link">
+            <i class="fa-solid fa-chevron-left"></i> Voltar ao Painel
+        </a>
+
+        <div class="details-container">
+            <div class="details-visual">
+                <div class="img-frame">
+                    <img src="{{ url_for('static', filename='img/' + item.img) }}" alt="{{ item.nome }}">
+                </div>
+            </div>
+
+            <div class="details-info">
+                <span class="badge">{{ item.categoria }}</span>
+                <h1>{{ item.nome }}</h1>
+                
+                <p class="description">
+                    {{ item.definicao }}
+                </p>
+
+                <div class="specs-box">
+                    <h3><i class="fa-solid fa-list-check"></i> Ficha Técnica</h3>
+                    <div class="specs-grid">
+                        {% for spec in item.specs %}
+                        <div class="spec-card">
+                            {{ spec }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
